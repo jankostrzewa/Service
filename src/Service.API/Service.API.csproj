@@ -7,12 +7,19 @@
     <NoWarn>1591;RCS1090</NoWarn>
     <Nullable>enable</Nullable>
     <UserSecretsId>9018d53d-9c3d-40ec-b6a4-b602e0f42061</UserSecretsId>
+    <DockerfileFile>../../Dockerfile</DockerfileFile>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="7.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="MediatR" Version="8.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Scrutor" Version="3.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc5" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.0.0-rc5" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.0.0-rc5" />
@@ -22,10 +29,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Service.Application\Service.Application.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ApiModels\" />
-  </ItemGroup>
-
-
 </Project>

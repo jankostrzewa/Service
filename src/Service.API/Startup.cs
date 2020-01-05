@@ -1,9 +1,12 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Service.API.Configuration;
+using System;
+using System.Reflection;
 
 namespace Service.Application
 {
@@ -25,6 +28,12 @@ namespace Service.Application
             services.AddSingleton(_ => cfg);
             services.AddControllers();
             services.AddSwaggerApi(cfg);
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            services.Scan(s => s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+                .AddClasses(c => c.AssignableTo(typeof(IRequest<>)))
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

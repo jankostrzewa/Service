@@ -30,10 +30,10 @@ namespace Service.Application
             services.AddSwaggerApi(cfg);
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.Scan(s => s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
-                .AddClasses(c => c.AssignableTo(typeof(IRequest<>)))
-                .AsImplementedInterfaces()
-                .WithTransientLifetime());
+            //services.Scan(s => s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+            //    .AddClasses(c => c.AssignableTo(typeof(IRequest<>)))
+            //    .AsImplementedInterfaces()
+            //    .WithTransientLifetime());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +44,7 @@ namespace Service.Application
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             

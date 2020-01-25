@@ -16,9 +16,9 @@ namespace Service.Application.Queries
             _repository = repository;
         }
 
-        public Task<ICollection<WeatherForecastView>> Handle(GetForecasts request, CancellationToken cancellationToken)
+        public async Task<ICollection<WeatherForecastView>> Handle(GetForecasts request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return new List<WeatherForecastView>() { };
         }
     }
 }

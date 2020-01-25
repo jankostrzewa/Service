@@ -9,8 +9,10 @@ namespace Service.API.Configuration
 {
     public static class SwaggerConfiguration
     {
-        public static IServiceCollection AddSwaggerApi(this IServiceCollection services, AppConfiguration cfg)
+        public static IServiceCollection AddSwaggerApi(this IServiceCollection services)
         {
+            var cfg = services.BuildServiceProvider().GetRequiredService<AppConfiguration>();
+
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo

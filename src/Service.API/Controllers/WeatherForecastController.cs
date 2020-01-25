@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Service.Application.Commands;
 using Service.Application.Queries;
-using Service.Application.ReturnModels;
+using Service.API.DTOs;
 
 namespace Service.API.Controllers
 {
@@ -16,10 +16,7 @@ namespace Service.API.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+
 
         private readonly IMediator _mediator;
         private readonly ILogger<WeatherForecastController> _logger;
@@ -36,7 +33,7 @@ namespace Service.API.Controllers
         /// <returns>An array of sample objects</returns>
         [HttpGet("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<WeatherForecastView>>> GetAsync()
+        public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> GetAsync()
         {
             var result = await _mediator.Send(new GetForecasts());
             return Ok(result);
@@ -48,7 +45,7 @@ namespace Service.API.Controllers
         /// <returns>An array of sample objects</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastView>> GetByIdAsync(Guid id)
+        public async Task<ActionResult<WeatherForecastDto>> GetByIdAsync(Guid id)
         {
             var result = await _mediator.Send(new GetForecastById(id));
             return Ok(result);
@@ -60,7 +57,7 @@ namespace Service.API.Controllers
         /// <returns>An array of sample objects</returns>
         [HttpGet("latest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastView>> GetLatestAsync()
+        public async Task<ActionResult<WeatherForecastDto>> GetLatestAsync()
         {
             var result = await _mediator.Send(new GetLatestForecast());
             return Ok(result);
@@ -72,7 +69,7 @@ namespace Service.API.Controllers
         /// <returns>The created resource</returns>
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<WeatherForecastView>> CreateAsync()
+        public async Task<ActionResult<WeatherForecastDto>> CreateAsync()
         {
             var result = await _mediator.Send(new CreateNewForecast());
             return CreatedAtRoute(new {  }, result);
@@ -84,7 +81,7 @@ namespace Service.API.Controllers
         /// <returns>The created resource</returns>
         [HttpPut("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastView>> UpdateAsync(UpdateForecast forecast)
+        public async Task<ActionResult<WeatherForecastDto>> UpdateAsync(UpdateForecast forecast)
         {
             var result = await _mediator.Send(forecast);
             return Ok(result);

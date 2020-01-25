@@ -5,6 +5,10 @@ namespace Service.Domain
 {
     public class WeatherForecast : Entity
     {
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
@@ -15,8 +19,11 @@ namespace Service.Domain
 
         public static WeatherForecast Create()
         {
+            var random = new Random();
             var fc = new WeatherForecast();
             fc.Id = Guid.NewGuid();
+            fc.TemperatureC = random.Next(-30, 70);
+            fc.Summary = Summaries[random.Next(0, 9)];
             return fc;
         }
     }

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Service.Application.ReturnModels;
+using Service.Domain;
 
 namespace Service.Application.Commands
 {
-    public class UpdateForecast : IRequest<WeatherForecastView>
+    public class UpdateForecast : IRequest<WeatherForecast>
     {
     }
 }

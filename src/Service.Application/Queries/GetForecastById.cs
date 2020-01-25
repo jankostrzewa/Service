@@ -1,11 +1,10 @@
 ﻿using MediatR;
-using Service.Application.ReturnModels;
+using Service.Domain;
 using System;
-using System.Collections.Generic;
 
 namespace Service.Application.Queries
 {
-    public class GetForecastById : IRequest<WeatherForecastView>
+    public class GetForecastById : IRequest<WeatherForecast>
     {
         Guid Id { get; }
 

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Service.Application.ReturnModels;
 using Service.Domain;
 using System;
 using System.Threading;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Application.Queries
 {
-    public class GetForecastByIdHandler : IRequestHandler<GetForecastById, WeatherForecastView>
+    public class GetForecastByIdHandler : IRequestHandler<GetForecastById, WeatherForecast>
     {
         private readonly IRepository<WeatherForecast> _repository;
 
@@ -16,7 +15,7 @@ namespace Service.Application.Queries
             _repository = repository;
         }
 
-        public Task<WeatherForecastView> Handle(GetForecastById request, CancellationToken cancellationToken)
+        public Task<WeatherForecast> Handle(GetForecastById request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

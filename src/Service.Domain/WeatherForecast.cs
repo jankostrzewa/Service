@@ -21,6 +21,7 @@ namespace Service.Domain
         {
             var random = new Random();
             var fc = new WeatherForecast();
+            fc.Date = DateTime.Now.AddDays(random.Next(1, 15));
             fc.Id = Guid.NewGuid();
             fc.TemperatureC = random.Next(-30, 70);
             fc.Summary = Summaries[random.Next(0, 9)];

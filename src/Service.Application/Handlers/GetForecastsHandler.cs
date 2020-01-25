@@ -18,7 +18,7 @@ namespace Service.Application.Queries
 
         public async Task<ICollection<WeatherForecast>> Handle(GetForecasts request, CancellationToken cancellationToken)
         {
-            return new List<WeatherForecast>() { WeatherForecast.Create(), };
+            return new List<WeatherForecast>() { WeatherForecast.Create() };
         }
     }
 }

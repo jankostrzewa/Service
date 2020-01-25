@@ -10,6 +10,11 @@ namespace Service.Domain.SeedWork
         private Guid _Id;
         private List<INotification> _domainEvents;
 
+        protected Entity()
+        {
+            _domainEvents = new List<INotification>();
+        }
+
         public virtual Guid Id
         {
             get
@@ -24,9 +29,10 @@ namespace Service.Domain.SeedWork
 
         public List<INotification> DomainEvents => _domainEvents;
 
+
+
         public void AddDomainEvent(INotification eventItem)
         {
-            _domainEvents = _domainEvents ?? new List<INotification>();
             _domainEvents.Add(eventItem);
         }
 

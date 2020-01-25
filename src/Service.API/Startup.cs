@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Service.API.Configuration;
+using Service.Application.Queries;
 using Service.Domain;
 using Service.Infrastructure;
 using System;
@@ -25,7 +26,6 @@ namespace Service.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            AppConfiguration appConfiguration;
             // Register strongly typed application configuration. This must be the first step.
             services.AddSingleton(resolver =>
             {
@@ -39,7 +39,7 @@ namespace Service.API
             services.AddScoped<IRepository<WeatherForecast>, WeatherForecastRepository>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.Scan(s => s.FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+            services.Scan(s => s.FromAssembliesOf(typeof(IMediator), typeof(Startup), typeof(GetForecasts))
                 .AddClasses(c => c.AssignableTo(typeof(IMediator))).AsImplementedInterfaces().WithScopedLifetime()
                 .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>))).AsImplementedInterfaces().WithScopedLifetime());
         }

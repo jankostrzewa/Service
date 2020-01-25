@@ -1,10 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Service.API.Test
+namespace Service.API.Controllers.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class WeatherForecastControllerTests
     {
+
         [TestMethod]
         public void TestMethod1()
         {

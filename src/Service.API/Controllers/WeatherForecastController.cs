@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Service.API.DTOs;
 using Service.Application.Commands;
 using Service.Application.Queries;
-using Service.API.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Service.API.Controllers
 {
@@ -33,9 +33,9 @@ namespace Service.API.Controllers
         /// <returns>An array of sample objects</returns>
         [HttpGet("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> GetAsync()
+        public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> GetAsync(CancellationToken ct = default)
         {
-            var result = await _mediator.Send(new GetForecasts());
+            var result = await _mediator.Send(new GetForecasts(), ct);
             return Ok(result);
         }
 
@@ -45,9 +45,9 @@ namespace Service.API.Controllers
         /// <returns>An array of sample objects</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastDto>> GetByIdAsync(Guid id)
+        public async Task<ActionResult<WeatherForecastDto>> GetByIdAsync(Guid id, CancellationToken ct = default)
         {
-            var result = await _mediator.Send(new GetForecastById(id));
+            var result = await _mediator.Send(new GetForecastById(id), ct);
             return Ok(result);
         }
 
@@ -57,9 +57,9 @@ namespace Service.API.Controllers
         /// <returns>An array of sample objects</returns>
         [HttpGet("latest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastDto>> GetLatestAsync()
+        public async Task<ActionResult<WeatherForecastDto>> GetLatestAsync(CancellationToken ct = default)
         {
-            var result = await _mediator.Send(new GetLatestForecast());
+            var result = await _mediator.Send(new GetLatestForecast(), ct);
             return Ok(result);
         }
 
@@ -69,9 +69,9 @@ namespace Service.API.Controllers
         /// <returns>The created resource</returns>
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<WeatherForecastDto>> CreateAsync()
+        public async Task<ActionResult<WeatherForecastDto>> CreateAsync(CancellationToken ct = default)
         {
-            var result = await _mediator.Send(new CreateNewForecast());
+            var result = await _mediator.Send(new CreateNewForecast(), ct);
             return CreatedAtRoute(new {  }, result);
         }
 
@@ -81,9 +81,9 @@ namespace Service.API.Controllers
         /// <returns>The created resource</returns>
         [HttpPut("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastDto>> UpdateAsync(UpdateForecast forecast)
+        public async Task<ActionResult<WeatherForecastDto>> UpdateAsync(UpdateForecast forecast, CancellationToken ct = default)
         {
-            var result = await _mediator.Send(forecast);
+            var result = await _mediator.Send(forecast, ct);
             return Ok(result);
         }
     }

@@ -52,6 +52,11 @@ namespace Service.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(opt => {
+                opt.AllowAnyHeader();
+                opt.AllowAnyMethod();
+                opt.AllowAnyOrigin();
+            });
             //app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -21,16 +21,20 @@ namespace Service.Domain
 
         public WeatherForecast(Guid id, DateTime date, int temperatureC, string summary, IEnumerable<string> humidities)
         {
-            Id = id;
-            Date = date;
+            Id = id != default ? id : throw new ArgumentException();
+            Date = date != default ? date : throw new ArgumentException();
             TemperatureC = temperatureC;
-            Summary = summary;
+            Summary = !string.IsNullOrWhiteSpace(summary) ? summary : throw new ArgumentException();
             _humidities = humidities?.ToList() ?? new List<string>();
         }
 
         public void AddHumidity(string humidity)
         {
-            _humidities.Add(humidity ?? throw new ArgumentNullException());
+            if (string.IsNullOrWhiteSpace(humidity))
+            {
+                throw new ArgumentException();
+            }
+            _humidities.Add(humidity);
         }
     }
 }

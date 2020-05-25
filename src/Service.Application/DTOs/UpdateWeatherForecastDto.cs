@@ -8,6 +8,6 @@ namespace Service.Application.DTOs
         public DateTime Date { get; set; }
         public int TemperatureC { get; set; }
         public string Summary { get; set; }
-        public IEnumerable<string> Humidities { get; internal set; }
+        public IEnumerable<string> Humidities { get; set; }
     }
 }

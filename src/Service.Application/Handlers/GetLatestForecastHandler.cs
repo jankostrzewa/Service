@@ -1,22 +1,23 @@
 ﻿using MediatR;
+using Service.Application.DTOs;
 using Service.Domain;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Service.Application.Queries
 {
-    public class GetLatestForecastHandler : IRequestHandler<GetLatestForecast, WeatherForecast>
+    public class GetLatestForecastHandler : IRequestHandler<GetLatestForecast, WeatherForecastDto>
     {
-        private readonly IRepository<WeatherForecast> _repository;
+        private readonly IReadonlyRepository<WeatherForecast> _repository;
 
-        public GetLatestForecastHandler(IRepository<WeatherForecast> repository)
+        public GetLatestForecastHandler(IReadonlyRepository<WeatherForecast> repository)
         {
             _repository = repository;
         }
 
-        public Task<WeatherForecast> Handle(GetLatestForecast request, CancellationToken cancellationToken)
+        public Task<WeatherForecastDto> Handle(GetLatestForecast request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return null; //TODO
         }
     }
 }

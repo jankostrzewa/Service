@@ -32,14 +32,20 @@ namespace Service.API
                 services.Configure<AppConfiguration>(_ => Configuration.GetSection(nameof(AppConfiguration)));
                 return resolver.GetRequiredService<IOptions<AppConfiguration>>().Value;
             });
+
+            //services.AddDbContext(opt =>
+            //{
+
+            //});
                 
             services.AddControllers();
             services.AddSwaggerApi();
 
-            services.AddScoped<IRepository<WeatherForecast>, WeatherForecastRepository>();
+            services.AddScoped<IWriteOnlyRepository<WeatherForecast>, WeatherForecastRepository>();
+            services.AddScoped<IReadonlyRepository<WeatherForecast>, WeatherForecastRepository>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.Scan(s => s.FromAssembliesOf(typeof(IMediator), typeof(Startup), typeof(GetForecasts))
+            services.Scan(s => s.FromAssembliesOf(typeof(IMediator), typeof(Startup), typeof(GetAllWeatherForecasts))
                 .AddClasses(c => c.AssignableTo(typeof(IMediator))).AsImplementedInterfaces().WithScopedLifetime()
                 .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>))).AsImplementedInterfaces().WithScopedLifetime());
         }

@@ -8,16 +8,16 @@ namespace Service.Application.Queries
 {
     public class GetForecastByIdHandler : IRequestHandler<GetForecastById, WeatherForecast>
     {
-        private readonly IRepository<WeatherForecast> _repository;
+        private readonly IReadonlyRepository<WeatherForecast> _repository;
 
-        public GetForecastByIdHandler(IRepository<WeatherForecast> repository)
+        public GetForecastByIdHandler(IReadonlyRepository<WeatherForecast> repository)
         {
             _repository = repository;
         }
 
         public Task<WeatherForecast> Handle(GetForecastById request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return null; //TODO
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service.API.DTOs
+namespace Service.Application.DTOs
 {
     public class WeatherForecastDto
     {

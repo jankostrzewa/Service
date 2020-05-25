@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Service.API.DTOs;
 using Service.Application.Commands;
+using Service.Application.DTOs;
 using Service.Application.Queries;
 using System;
 using System.Collections.Generic;
@@ -14,14 +14,12 @@ namespace Service.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastsController : ControllerBase
     {
-
-
         private readonly IMediator _mediator;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherForecastsController> _logger;
 
-        public WeatherForecastController(IMediator mediator,ILogger<WeatherForecastController> logger)
+        public WeatherForecastsController(IMediator mediator, ILogger<WeatherForecastsController> logger)
         {
             _mediator = mediator;
             _logger = logger;
@@ -30,19 +28,19 @@ namespace Service.API.Controllers
         /// <summary>
         /// Example API method for data retrieval
         /// </summary>
-        /// <returns>An array of sample objects</returns>
-        [HttpGet("")]
+        /// <returns>An array of all objects</returns>
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> GetAsync(CancellationToken ct = default)
+        public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> GetAllAsync(CancellationToken ct = default)
         {
-            var result = await _mediator.Send(new GetForecasts(), ct);
+            var result = await _mediator.Send(new GetAllWeatherForecasts(), ct);
             return Ok(result);
         }
 
         /// <summary>
         /// Example API method for data retrieval
         /// </summary>
-        /// <returns>An array of sample objects</returns>
+        /// <returns>An objects</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<WeatherForecastDto>> GetByIdAsync(Guid id, CancellationToken ct = default)
@@ -54,7 +52,7 @@ namespace Service.API.Controllers
         /// <summary>
         /// Example API method for data retrieval
         /// </summary>
-        /// <returns>An array of sample objects</returns>
+        /// <returns>An objects</returns>
         [HttpGet("latest")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<WeatherForecastDto>> GetLatestAsync(CancellationToken ct = default)
@@ -67,23 +65,23 @@ namespace Service.API.Controllers
         /// Example API method for creating a resource
         /// </summary>
         /// <returns>The created resource</returns>
-        [HttpPost("")]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<WeatherForecastDto>> CreateAsync(CancellationToken ct = default)
+        public async Task<ActionResult<WeatherForecastDto>> CreateAsync([FromBody]CreateWeatherForecastDto createWeatherForecastDto, CancellationToken ct = default)
         {
-            var result = await _mediator.Send(new CreateNewForecast(), ct);
-            return CreatedAtRoute(new {  }, result);
+            var result = await _mediator.Send(new CreateNewWeatherForecast(createWeatherForecastDto), ct);
+            return CreatedAtAction(nameof(GetByIdAsync), result);
         }
 
         /// <summary>
         /// Example API method for updating a resource
         /// </summary>
-        /// <returns>The created resource</returns>
-        [HttpPut("")]
+        /// <returns>The updated resource</returns>
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherForecastDto>> UpdateAsync(UpdateForecast forecast, CancellationToken ct = default)
+        public async Task<ActionResult<WeatherForecastDto>> UpdateAsync([FromBody]UpdateWeatherForecastDto forecast, Guid id, CancellationToken ct = default)
         {
-            var result = await _mediator.Send(forecast, ct);
+            var result = await _mediator.Send(new UpdateForecast(id, forecast), ct);
             return Ok(result);
         }
     }

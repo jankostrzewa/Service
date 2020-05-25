@@ -6,8 +6,11 @@ namespace Service.Application.Queries
 {
     public class GetForecastById : IRequest<WeatherForecast>
     {
-        Guid Id { get; }
+        public Guid Id { get; }
 
-        public GetForecastById(Guid id) => Id = id;
+        public GetForecastById(Guid id)
+        {
+            Id = id;
+        }
     }
 }

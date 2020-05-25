@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Service.Domain;
+using Service.Application.DTOs;
 
 namespace Service.Application.Queries
 {
-    public class GetLatestForecast : IRequest<WeatherForecast>
+    public class GetLatestForecast : IRequest<WeatherForecastDto>
     {
     }
 }

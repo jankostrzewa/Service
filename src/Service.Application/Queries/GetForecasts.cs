@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Service.Domain;
+using Service.Application.DTOs;
 using System.Collections.Generic;
 
 namespace Service.Application.Queries
 {
-    public class GetForecasts : IRequest<ICollection<WeatherForecast>>
+    public class GetAllWeatherForecasts : IRequest<ICollection<WeatherForecastDto>>
     {
     }
 }

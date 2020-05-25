@@ -1,31 +1,36 @@
 using Service.Domain.SeedWork;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Service.Domain
 {
     public class WeatherForecast : Entity
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        public DateTime Date { get; set; }
+        public DateTime Date { get; }
 
-        public int TemperatureC { get; set; }
+        public int TemperatureC { get; }
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-        public string Summary { get; set; }
+        public string Summary { get; }
 
-        public static WeatherForecast Create()
+        public IReadOnlyList<string> Humidities { get => _humidities; }
+
+        private List<string> _humidities;
+
+        public WeatherForecast(Guid id, DateTime date, int temperatureC, string summary, IEnumerable<string> humidities)
         {
-            var random = new Random();
-            var fc = new WeatherForecast();
-            fc.Date = DateTime.Now.AddDays(random.Next(1, 15));
-            fc.Id = Guid.NewGuid();
-            fc.TemperatureC = random.Next(-30, 70);
-            fc.Summary = Summaries[random.Next(0, 9)];
-            return fc;
+            Id = id;
+            Date = date;
+            TemperatureC = temperatureC;
+            Summary = summary;
+            _humidities = humidities?.ToList() ?? new List<string>();
+        }
+
+        public void AddHumidity(string humidity)
+        {
+            _humidities.Add(humidity ?? throw new ArgumentNullException());
         }
     }
 }

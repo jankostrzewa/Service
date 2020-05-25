@@ -5,7 +5,6 @@ namespace Service.API.Controllers.Test
     [TestClass]
     public class WeatherForecastControllerTests
     {
-
         [TestMethod]
         public void TestMethod1()
         {

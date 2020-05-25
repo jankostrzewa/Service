@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Domain", "src\Service.Domain\Service.Domain.csproj", "{0FD416CE-4566-4070-99DF-5EF9DC245009}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{FFF024D7-C60D-43B8-9ABD-D531C41EF2E4}"
+	ProjectSection(SolutionItems) = preProject
+		src\Service.Domain\SeedWork\IRepository.cs = src\Service.Domain\SeedWork\IRepository.cs
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Infrastructure", "src\Service.Infrastructure\Service.Infrastructure.csproj", "{D9E136E7-18D0-458C-93ED-6131AE774897}"
 EndProject

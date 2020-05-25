@@ -1,29 +1,47 @@
-﻿using Service.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using Service.Domain;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Service.Infrastructure
 {
-    public class WeatherForecastRepository : IRepository<WeatherForecast>
+    public class WeatherForecastRepository : IReadonlyRepository<WeatherForecast>, IWriteOnlyRepository<WeatherForecast>
     {
-        public Task<bool> DeleteAsync(Guid id)
+        private readonly WeatherForecastDbContext _context;
+
+        public WeatherForecastRepository(WeatherForecastDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<IEnumerable<WeatherForecast>> GetAllAsync()
+        public async Task<IEnumerable<WeatherForecast>> GetAllAsync(CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            return await _context.WeatherForecasts.AsNoTracking().ToListAsync(ct);
         }
 
-        public Task<WeatherForecast> GetByIdAsync(Guid id)
+        public async Task<WeatherForecast> GetByIdAsync(Guid id, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            return await _context.WeatherForecasts.AsNoTracking().SingleAsync(x => x.Id == id, ct);
+        }
+        public async Task<WeatherForecast> AddAsync(WeatherForecast entity, CancellationToken ct = default)
+        {
+            var newEntry = _context.Add(entity ?? throw new ArgumentNullException());
+            await _context.SaveChangesAsync(ct);
+            var newEntity = newEntry.Entity;
+            _context.Entry(newEntry).State = EntityState.Detached;
+            return newEntity;
         }
 
-        public Task<WeatherForecast> UpdateAsync(WeatherForecast entity)
+        public async Task<WeatherForecast> UpdateAsync(WeatherForecast entity, CancellationToken ct = default)
+        {
+            var updatedEntry = _context.WeatherForecasts.Update(entity);
+            await _context.SaveChangesAsync(ct);
+            return updatedEntry.Entity;
+        }
+
+        public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }

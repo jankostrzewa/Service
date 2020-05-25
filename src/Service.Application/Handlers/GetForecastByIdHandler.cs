@@ -8,9 +8,9 @@ namespace Service.Application.Queries
 {
     public class GetForecastByIdHandler : IRequestHandler<GetForecastById, WeatherForecast>
     {
-        private readonly IReadonlyRepository<WeatherForecast> _repository;
+        private readonly IReadOnlyRepository<WeatherForecast> _repository;
 
-        public GetForecastByIdHandler(IReadonlyRepository<WeatherForecast> repository)
+        public GetForecastByIdHandler(IReadOnlyRepository<WeatherForecast> repository)
         {
             _repository = repository;
         }

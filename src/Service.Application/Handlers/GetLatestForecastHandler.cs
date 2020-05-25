@@ -8,9 +8,9 @@ namespace Service.Application.Queries
 {
     public class GetLatestForecastHandler : IRequestHandler<GetLatestForecast, WeatherForecastDto>
     {
-        private readonly IReadonlyRepository<WeatherForecast> _repository;
+        private readonly IReadOnlyRepository<WeatherForecast> _repository;
 
-        public GetLatestForecastHandler(IReadonlyRepository<WeatherForecast> repository)
+        public GetLatestForecastHandler(IReadOnlyRepository<WeatherForecast> repository)
         {
             _repository = repository;
         }

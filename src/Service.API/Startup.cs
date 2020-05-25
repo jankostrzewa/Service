@@ -42,7 +42,7 @@ namespace Service.API
             services.AddSwaggerApi();
 
             services.AddScoped<IWriteOnlyRepository<WeatherForecast>, WeatherForecastRepository>();
-            services.AddScoped<IReadonlyRepository<WeatherForecast>, WeatherForecastRepository>();
+            services.AddScoped<IReadOnlyRepository<WeatherForecast>, WeatherForecastRepository>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.Scan(s => s.FromAssembliesOf(typeof(IMediator), typeof(Startup), typeof(GetAllWeatherForecasts))

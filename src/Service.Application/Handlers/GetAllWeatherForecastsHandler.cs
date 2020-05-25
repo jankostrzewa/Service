@@ -10,10 +10,10 @@ namespace Service.Application.Queries
 {
     public class GetAllWeatherForecastsHandler : IRequestHandler<GetAllWeatherForecasts, ICollection<WeatherForecastDto>>
     {
-        private readonly IReadonlyRepository<WeatherForecast> _repository;
+        private readonly IReadOnlyRepository<WeatherForecast> _repository;
         private readonly IMapper _mapper;
 
-        public GetAllWeatherForecastsHandler(IReadonlyRepository<WeatherForecast> repository, IMapper mapper)
+        public GetAllWeatherForecastsHandler(IReadOnlyRepository<WeatherForecast> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Infrastructure
 {
-    public class WeatherForecastRepository : IReadonlyRepository<WeatherForecast>, IWriteOnlyRepository<WeatherForecast>
+    public class WeatherForecastRepository : IReadOnlyRepository<WeatherForecast>, IWriteOnlyRepository<WeatherForecast>
     {
         private readonly WeatherForecastDbContext _context;
 

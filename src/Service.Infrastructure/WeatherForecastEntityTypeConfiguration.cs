@@ -9,7 +9,9 @@ namespace Service.Infrastructure
     {
         public void Configure(EntityTypeBuilder<WeatherForecast> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(x => x.Id);
+            builder.HasMany(x => x.Humidities);
+
         }
     }
 }

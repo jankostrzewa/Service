@@ -7,10 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Service.API.Configuration;
-using Service.Application.Queries;
 using Service.Domain;
 using Service.Infrastructure;
-using System;
 using System.Reflection;
 
 namespace Service.API
@@ -24,7 +22,6 @@ namespace Service.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Register strongly typed application configuration. This must be the first step.
@@ -41,15 +38,11 @@ namespace Service.API
             services.AddAutoMapper(typeof(Application.MappingProfile));
 
             services.AddScoped<IRepository<WeatherForecast>, WeatherForecastRepository>();
+            services.AddScoped<IReadOnlyRepository<WeatherForecast>, WeatherForecastRepository>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMediatR(typeof(Application.Commands.CreateNewWeatherForecastHandler).GetTypeInfo().Assembly);
-
-            //services.Scan(s => s.FromAssembliesOf(typeof(IMediator), typeof(Startup), typeof(GetAllWeatherForecasts))
-            //    .AddClasses(c => c.AssignableTo(typeof(IMediator))).AsImplementedInterfaces().WithScopedLifetime()
-            //    .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>))).AsImplementedInterfaces().WithScopedLifetime());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -57,7 +50,8 @@ namespace Service.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(opt => {
+            app.UseCors(opt =>
+            {
                 opt.AllowAnyHeader();
                 opt.AllowAnyMethod();
                 opt.AllowAnyOrigin();

@@ -1,1 +1,1 @@
-## A startup project for .NET Core 3.1 microservices
+## A clean architecture startup project for .NET 6 services

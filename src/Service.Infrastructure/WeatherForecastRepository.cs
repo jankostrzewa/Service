@@ -2,12 +2,13 @@
 using Service.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Service.Infrastructure
 {
-    public class WeatherForecastRepository : IReadOnlyRepository<WeatherForecast>, IWriteOnlyRepository<WeatherForecast>
+    public class WeatherForecastRepository : IReadOnlyRepository<WeatherForecast>, IRepository<WeatherForecast>
     {
         private readonly WeatherForecastDbContext _context;
 
@@ -16,15 +17,31 @@ namespace Service.Infrastructure
             _context = context;
         }
 
-        public async Task<IEnumerable<WeatherForecast>> GetAllAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<WeatherForecast>> GetAllAsNoTrackingAsync(CancellationToken ct = default)
         {
             return await _context.WeatherForecasts.AsNoTracking().ToListAsync(ct);
         }
 
-        public async Task<WeatherForecast> GetByIdAsync(Guid id, CancellationToken ct = default)
+        public async Task<WeatherForecast> GetByIdAsNoTrackingAsync(Guid id, CancellationToken ct = default)
         {
             return await _context.WeatherForecasts.AsNoTracking().SingleAsync(x => x.Id == id, ct);
         }
+
+        public async Task<WeatherForecast> GetLatestAsNoTrackingAsync(CancellationToken ct = default)
+        {
+            return await _context.WeatherForecasts.OrderByDescending(x => x.Date).AsNoTracking().FirstAsync(ct);
+        }
+
+        public async Task<IEnumerable<WeatherForecast>> GetAllAsync(CancellationToken ct = default)
+        {
+            return await _context.WeatherForecasts.ToListAsync(ct);
+        }
+
+        public async Task<WeatherForecast> GetByIdAsync(Guid id, CancellationToken ct = default)
+        {
+            return await _context.WeatherForecasts.SingleAsync(x => x.Id == id, ct);
+        }
+
         public async Task<WeatherForecast> AddAsync(WeatherForecast entity, CancellationToken ct = default)
         {
             var newEntry = _context.Add(entity ?? throw new ArgumentNullException());
@@ -41,9 +58,16 @@ namespace Service.Infrastructure
             return updatedEntry.Entity;
         }
 
-        public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
+        public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var entry = await _context.WeatherForecasts.FindAsync(id, ct);
+            if(entry is null)
+            {
+                throw new InvalidOperationException();
+            }
+            _context.Remove(entry);
+            var result = await _context.SaveChangesAsync(ct);
+            return result == 1;
         }
     }
 }

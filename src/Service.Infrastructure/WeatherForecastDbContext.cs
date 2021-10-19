@@ -18,7 +18,7 @@ namespace Service.Infrastructure
             modelBuilder.ApplyConfiguration(new WeatherForecastEntityTypeConfiguration());
 
             modelBuilder.Entity<WeatherForecast>().HasData(
-                new WeatherForecast(Guid.NewGuid(), DateTime.UtcNow, 0, "summary", new string[] { })
+                new WeatherForecast(Guid.NewGuid(), DateTime.UtcNow, 0, "summary", Array.Empty<string>())
             );
         }
     }

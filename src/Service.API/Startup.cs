@@ -40,8 +40,7 @@ namespace Service.API
             services.AddSwaggerApi();
             services.AddAutoMapper(typeof(Application.MappingProfile));
 
-            services.AddScoped<IWriteOnlyRepository<WeatherForecast>, WeatherForecastRepository>();
-            services.AddScoped<IReadOnlyRepository<WeatherForecast>, WeatherForecastRepository>();
+            services.AddScoped<IRepository<WeatherForecast>, WeatherForecastRepository>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddMediatR(typeof(Application.Commands.CreateNewWeatherForecastHandler).GetTypeInfo().Assembly);
 

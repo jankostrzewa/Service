@@ -21,7 +21,7 @@ namespace Service.Application.Queries
 
         public async Task<ICollection<WeatherForecastDto>> Handle(GetAllWeatherForecasts request, CancellationToken cancellationToken)
         {
-            var allWeatherForecasts = await _repository.GetAllAsync(cancellationToken);
+            var allWeatherForecasts = await _repository.GetAllAsNoTrackingAsync(cancellationToken);
             return _mapper.Map<ICollection<WeatherForecastDto>>(allWeatherForecasts);
         }
     }

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Service.Application.Commands;
 using Service.Application.DTOs;
 using Service.Application.Queries;
@@ -17,12 +16,10 @@ namespace Service.API.Controllers
     public class WeatherForecastsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<WeatherForecastsController> _logger;
 
-        public WeatherForecastsController(IMediator mediator, ILogger<WeatherForecastsController> logger)
+        public WeatherForecastsController(IMediator mediator)
         {
             _mediator = mediator;
-            _logger = logger;
         }
 
         /// <summary>

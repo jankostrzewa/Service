@@ -10,10 +10,10 @@ namespace Service.Application.Commands
 {
     public class CreateNewWeatherForecastHandler : IRequestHandler<CreateNewWeatherForecast, WeatherForecastDto>
     {
-        private readonly IWriteOnlyRepository<WeatherForecast> _repository;
+        private readonly IRepository<WeatherForecast> _repository;
         private readonly IMapper _mapper;
 
-        public CreateNewWeatherForecastHandler(IWriteOnlyRepository<WeatherForecast> repository, IMapper mapper)
+        public CreateNewWeatherForecastHandler(IRepository<WeatherForecast> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -22,7 +22,7 @@ namespace Service.Application.Commands
         public async Task<WeatherForecastDto> Handle(CreateNewWeatherForecast request, CancellationToken cancellationToken)
         {
             var newForecast = WeatherForecastBuilder.CreateNew(request.CreateWeatherForecastDto);
-            newForecast = await _repository.AddAsync(newForecast);
+            newForecast = await _repository.AddAsync(newForecast, cancellationToken);
             return _mapper.Map<WeatherForecastDto>(newForecast);
         }
     }

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Service.Domain;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace Service.Application.Queries
 
         public Task<WeatherForecast> Handle(GetForecastById request, CancellationToken cancellationToken)
         {
-            return null; //TODO
+            return _repository.GetByIdAsNoTrackingAsync(request.Id, cancellationToken);
         }
     }
 }
